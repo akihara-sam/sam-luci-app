@@ -39,6 +39,7 @@ define Package/pppwn-cpp/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_DIR) $(1)/etc/pppwn
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pppwn $(1)/usr/bin/pppwn
+	chmod +x $(1)/usr/bin/pppwn
 	$(INSTALL_DATA) ./files/* $(1)/etc/pppwn/
 endef
 
