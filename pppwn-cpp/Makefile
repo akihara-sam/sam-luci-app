@@ -6,7 +6,9 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/xfangfang/PPPwn_cpp.git
-PKG_SOURCE_VERSION:=main
+PKG_SOURCE_VERSION:=abb5159737c92602f7f6aa5b99255b4a36258f72
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE
@@ -30,16 +32,13 @@ endef
 
 CMAKE_OPTIONS += -DUSE_SYSTEM_PCAPPLUSPLUS=OFF
 
-define Build/Install
-endef
-
 define Package/pppwn-cpp/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_DIR) $(1)/etc/pppwn
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pppwn $(1)/usr/bin/pppwn
-	$(INSTALL_DATA) ./files/* $(1)/etc/pppwn/
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/files/* $(1)/etc/pppwn/
 	$(INSTALL_DIR) $(1)/www
-	$(INSTALL_BIN) ./www/goldhen.bin $(1)/www/goldhen.bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/www/goldhen.bin $(1)/www/goldhen.bin
 endef
 
 $(eval $(call BuildPackage,pppwn-cpp))
