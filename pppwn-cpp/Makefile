@@ -32,6 +32,12 @@ endef
 
 CMAKE_OPTIONS += -DUSE_SYSTEM_PCAPPLUSPLUS=OFF
 
+# 在构建阶段设置权限
+define Build/Compile
+	$(call Build/Compile/Default)
+	chmod +x $(PKG_BUILD_DIR)/pppwn
+endef
+
 define Build/Install
 endef
 
