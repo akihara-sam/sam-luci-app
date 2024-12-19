@@ -7,9 +7,6 @@ PROG=/usr/bin/pppwn
 
 start() {
 
-        # 确保脚本具有执行权限
-	chmod +x /etc/init.d/pppwn
-
 	config_load "pppwn"
 	
 	config_get "port" "config" "port"
@@ -25,9 +22,6 @@ start() {
 }
 
 stop() {
-
-    # 确保脚本具有执行权限
-    chmod +x /etc/init.d/pppwn
 
     ps -w | grep -v "grep" | grep "$PROG" | awk '{print $1}' | xargs kill -9 >/dev/null 2>&1 &
     echo "" > /var/log/pppwn.log
