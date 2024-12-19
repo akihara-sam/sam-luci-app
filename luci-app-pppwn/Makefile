@@ -14,10 +14,8 @@ PKG_RELEASE:=2
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
-# pppwn脚本赋权
+# 只给 pppwn 脚本赋予执行权限
 define Package/luci-app-pppwn/install
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./root/etc/init.d/pppwn $(1)/etc/init.d/pppwn
 	chmod 0755 $(1)/etc/init.d/pppwn
 endef
 
