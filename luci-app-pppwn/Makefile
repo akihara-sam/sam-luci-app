@@ -14,4 +14,13 @@ PKG_RELEASE:=2
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
+# pppwn脚本赋权
+define Package/luci-app-pppwn/install
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./root/etc/init.d/pppwn $(1)/etc/init.d/pppwn
+	chmod 0755 $(1)/etc/init.d/pppwn
+endef
+
+$(eval $(call BuildPackage,luci-app-pppwn))
+
 # call BuildPackage - OpenWrt buildroot signature
