@@ -24,13 +24,12 @@ function enable.write(self, section, value)
     end
 end
 
-
 source=s:option(Value, "source", translate("PPPwn Running Port"))
 source.datatype = "network"
 source.default = "br-lan"
 source.rmempty = false
 for _, e in ipairs(sys.net.devices()) do
-	if e ~= "lo" then source:value(e) end
+    if e ~= "lo" then source:value(e) end
 end
 
 fwver=s:option(Value, "fwver", translate("PlayStation 4 System Version"))
@@ -43,5 +42,21 @@ fwver.description = translate("1100 means Ver 11.00 etc.")
 
 goldhen = s:option(DummyValue, "goldhen", translate("Download GoldHEN Payload BIN"))
 goldhen.description = translate("<a class='btn cbi-button cbi-button-apply' type='button' href=\"../../../../goldhen.bin\" target=\"_blank\" />"..translate("Copy goldhen.bin to the root directory of an exfat/fat32 USB and insert it into your PS4").."</a>")
+
+-- 定义 apply 方法以处理保存并应用操作
+function m.apply(self)
+    local uci = require "luci.model.uci".cursor()
+    local enabled = uci:get("pppwn", "pppwn", "enable")
+
+    if enabled == "1" then
+        -- 启动服务
+        luci.sys.call("/etc/init.d/pppwn start")
+        luci.sys.call("logger -t PPPwn 'Service started after apply'")
+    else
+        -- 停止服务
+        luci.sys.call("/etc/init.d/pppwn stop")
+        luci.sys.call("logger -t PPPwn 'Service stopped after apply'")
+    end
+end
 
 return m
