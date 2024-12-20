@@ -11,6 +11,19 @@ s.anonymous = true
 enable=s:option(Flag, "enable", translate("Enabled"))
 enable.rmempty = false
 
+-- 设置启用/禁用功能
+function enable.write(self, section, value)
+    Flag.write(self, section, value)
+
+    if value == "1" then
+        -- 启动 PPPwn
+        luci.sys.call("/etc/init.d/pppwn start")
+    else
+        -- 停止 PPPwn
+        luci.sys.call("/etc/init.d/pppwn stop")
+    end
+end
+
 
 source=s:option(Value, "source", translate("PPPwn Running Port"))
 source.datatype = "network"
