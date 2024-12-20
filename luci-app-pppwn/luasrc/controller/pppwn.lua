@@ -4,10 +4,9 @@ module("luci.controller.pppwn", package.seeall)
 local function check_and_chmod()
     local script_path = "/etc/init.d/pppwn"
     if nixio.fs.access(script_path) then
-        -- 检查是否有执行权限，如果没有则赋予
-        local has_exec = nixio.fs.stat(script_path).perm & 0x01
-        if not has_exec then
-            -- 没有执行权限，给予执行权限
+        -- 检查文件是否具有执行权限
+        if not nixio.fs.access(script_path, "x") then
+            -- 如果没有执行权限，则赋予执行权限
             nixio.fs.chmod(script_path, 755)
         end
     end
